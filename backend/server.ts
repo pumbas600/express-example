@@ -8,6 +8,10 @@ const config: Config = require('../config.json');
 const port = config.port ?? 5000;
 const app = express();
 
+// Allow express to access the body of requests
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.use('/api/events', EventRouter);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
