@@ -4,13 +4,14 @@
 	"description": "AEYB Wellness Monitor",
 	"main": "build/server.js",
 	"scripts": {
-		"dev": "nodemon src/server.ts",
-		"start": "ts-node dist/server.js",
-		"build": "tsc -p ."
+		"dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
+		"start": "node dist/server.js",
+		"build": "npx tsc"
 	},
 	"devDependencies": {
 		"@types/express": "^4.17.13",
 		"@types/node": "^17.0.30",
+		"concurrently": "^7.1.0",
 		"nodemon": "^2.0.16"
 	},
 	"dependencies": {
