@@ -4,7 +4,7 @@
 	"description": "AEYB Wellness Monitor",
 	"main": "dist/server.js",
 	"scripts": {
-		"dev": "nodemon src/server.ts",
+		"devServer": "nodemon backend/server.ts",
 		"start": "node .",
 		"build": "npx tsc"
 	},
