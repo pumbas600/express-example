@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PostEvent } from '../Types/Event';
+import Status from '../Types/Status';
 
 function isInvalidPostEvent(res: Response, postEvent: PostEvent): boolean {
 	const description = postEvent.description ?? '';
@@ -18,7 +19,7 @@ function isInvalidPostEvent(res: Response, postEvent: PostEvent): boolean {
 
 	// Check for any errors
 	if (errors.length !== 0) {
-		res.status(401).json({ errors: errors });
+		res.status(Status.BAD_REQUEST).json({ errors: errors });
 		return true;
 	}
 	return true;
@@ -29,7 +30,7 @@ function isInvalidPostEvent(res: Response, postEvent: PostEvent): boolean {
  * @route 	GET /api/events/
  */
 async function getEvents(req: Request, res: Response): Promise<void> {
-	res.status(200).json({ message: 'Get events' });
+	res.status(Status.OK).json({ message: 'Get events' });
 }
 
 /**
@@ -39,7 +40,7 @@ async function getEvents(req: Request, res: Response): Promise<void> {
 async function createEvent(req: Request<{}, {}, PostEvent>, res: Response): Promise<void> {
 	if (isInvalidPostEvent(res, req.body)) return;
 
-	res.status(200).json({ message: 'Create event' });
+	res.status(Status.OK).json({ message: 'Create event' });
 }
 
 /**
@@ -49,7 +50,7 @@ async function createEvent(req: Request<{}, {}, PostEvent>, res: Response): Prom
 async function updateEvent(req: Request<{ id: string }, {}, PostEvent>, res: Response): Promise<void> {
 	if (isInvalidPostEvent(res, req.body)) return;
 
-	res.status(200).json({ message: `Updating events for id ${req.params.id}` });
+	res.status(Status.OK).json({ message: `Updating events for id ${req.params.id}` });
 }
 
 /**
@@ -57,7 +58,7 @@ async function updateEvent(req: Request<{ id: string }, {}, PostEvent>, res: Res
  * @route 	DELETE /api/events/:id
  */
 async function deleteEvent(req: Request<{ id: string }>, res: Response): Promise<void> {
-	res.status(200).json({ message: `Delete events for id ${req.params.id}` });
+	res.status(Status.OK).json({ message: `Delete events for id ${req.params.id}` });
 }
 
 export { getEvents, createEvent, updateEvent, deleteEvent };
