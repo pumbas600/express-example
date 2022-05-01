@@ -14,6 +14,26 @@ async function getEvents(req: Request, res: Response): Promise<void> {
  * @route 	POST /api/events/
  */
 async function createEvent(req: Request<{}, {}, PostEvent>, res: Response): Promise<void> {
+	const description = req.body.description ?? '';
+	const errors: string[] = [];
+
+	// Validate the post request - Always assume that they've entered an invalid value
+	if (typeof req.body.name !== 'string') {
+		errors.push(`The name must be a string, got ${typeof req.body.name}`);
+	}
+	if (typeof req.body.location !== 'string') {
+		errors.push(`The location must be a string, got ${typeof req.body.location}`);
+	}
+	if (typeof description !== 'string') {
+		errors.push(`The description must be a string, got ${typeof description}`);
+	}
+
+	// Check for any errors
+	if (errors.length !== 0) {
+		res.status(401).json({ errors: errors });
+		return;
+	}
+
 	res.status(200).json({ message: 'Create event' });
 }
 
