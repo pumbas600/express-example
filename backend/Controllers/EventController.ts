@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { PostEvent } from '../Types/Event';
+import { PostEvent } from '../Types/AYEBEvent';
 import Status from '../Types/Status';
 
 function isInvalidPostEvent(res: Response, postEvent: PostEvent): boolean {
