@@ -1,4 +1,5 @@
 {
 	"port": 5000,
-	"nodeEnv": "development"
+	"nodeEnv": "development",
+	"mongoURI": "mongodb+srv://admin:<password>@personalprojects.s50ob.mongodb.net/express-api?retryWrites=true&w=majority"
 }
