@@ -2,9 +2,9 @@
 	"name": "express-example",
 	"version": "1.0.0",
 	"description": "AEYB Wellness Monitor",
-	"main": "dist/server.js",
+	"main": "dist/index.js",
 	"scripts": {
-		"devServer": "nodemon backend/server.ts",
+		"devServer": "nodemon backend/index.ts",
 		"start": "node .",
 		"build": "npx tsc"
 	},
