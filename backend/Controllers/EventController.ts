@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { PostEvent, PostEventFields } from '../Types/AYEBEvent';
+import { PostEvent } from '../Types/AYEBEvent';
 import Status from '../Types/Status';
 import { EventModel } from '../Models/EventModel';
 import mongoose from 'mongoose';
@@ -70,7 +70,8 @@ async function updateEvent(
 
 	const event = await EventModel.findById(req.params.id);
 	if (!event) {
-		res.status(Status.NOT_FOUND).json({ errors: [ `There is no event with the id ${req.params.id}` ]})
+		res.status(Status.NOT_FOUND).json({ errors: [ `There is no event with the id ${req.params.id}` ]});
+		return;
 	}
 
 	const updatedEvent = await EventModel.findByIdAndUpdate(req.params.id, req.body); // Don't allow them to create new events 
@@ -86,7 +87,15 @@ async function deleteEvent(
 	req: Request<{ id: string }>,
 	res: Response
 ) {
-	res.status(Status.OK).json({ message: `Delete events for id ${req.params.id}` });
+	const event = await EventModel.findById(req.params.id);
+	if (!event) {
+		res.status(Status.NOT_FOUND).json({ errors: [ `There is no event with the id ${req.params.id}` ]});
+		return;
+	}
+
+	await event.remove(); // Remove the event from the database
+
+	res.status(Status.OK).json({ id: req.params.id });
 }
 
 export { getEvents, createEvent, updateEvent, deleteEvent };
