@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
-import { PostEvent } from '../Types/AYEBEvent';
+import { PostEvent, PostEventFields } from '../Types/AYEBEvent';
 import Status from '../Types/Status';
+import { EventModel } from '../Models/EventModel';
+import mongoose from 'mongoose';
+
+// TODO: Test post event with random fields
+// TODO: Check it's okay to leave validation to mongoose
 
 function isInvalidPostEvent(res: Response, postEvent: PostEvent): boolean {
 	const description = postEvent.description ?? '';
@@ -29,35 +34,58 @@ function isInvalidPostEvent(res: Response, postEvent: PostEvent): boolean {
  * @desc 	Get all events
  * @route 	GET /api/events/
  */
-async function getEvents(req: Request, res: Response): Promise<void> {
-	res.status(Status.OK).json({ message: 'Get events' });
+async function getEvents(req: Request, res: Response) {
+	const events = await EventModel.find(); // Get all events
+	
+	res.status(Status.OK).json(events);
 }
 
 /**
  * @desc 	Create a new event
  * @route 	POST /api/events/
  */
-async function createEvent(req: Request<{}, {}, PostEvent>, res: Response): Promise<void> {
+async function createEvent(
+	req: Request<{}, {}, PostEvent>,
+	res: Response
+) {
 	if (isInvalidPostEvent(res, req.body)) return;
 
-	res.status(Status.OK).json({ message: 'Create event' });
+	const event = await EventModel.create({
+		creatorId: new mongoose.Types.ObjectId(), // TODO: Replace with actual user id
+		...req.body,
+	});
+
+	res.status(Status.OK).json(event);
 }
 
 /**
  * @desc 	Update an event
  * @route 	PUT /api/events/:id
  */
-async function updateEvent(req: Request<{ id: string }, {}, PostEvent>, res: Response): Promise<void> {
-	if (isInvalidPostEvent(res, req.body)) return;
+async function updateEvent(
+	req: Request<{ id: string }, {}, PostEvent>,
+	res: Response
+) {
+	//if (isInvalidPostEvent(res, req.body)) return;
 
-	res.status(Status.OK).json({ message: `Updating events for id ${req.params.id}` });
+	const event = await EventModel.findById(req.params.id);
+	if (!event) {
+		res.status(Status.NOT_FOUND).json({ errors: [ `There is no event with the id ${req.params.id}` ]})
+	}
+
+	const updatedEvent = await EventModel.findByIdAndUpdate(req.params.id, req.body); // Don't allow them to create new events 
+
+	res.status(Status.OK).json(updatedEvent);
 }
 
 /**
  * @desc 	Delete an event
  * @route 	DELETE /api/events/:id
  */
-async function deleteEvent(req: Request<{ id: string }>, res: Response): Promise<void> {
+async function deleteEvent(
+	req: Request<{ id: string }>,
+	res: Response
+) {
 	res.status(Status.OK).json({ message: `Delete events for id ${req.params.id}` });
 }
 

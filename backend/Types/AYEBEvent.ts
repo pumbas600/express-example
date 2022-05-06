@@ -8,5 +8,6 @@ export interface AEYBEvent {
 	description?: string;
 }
 
+export const PostEventFields = ['name', 'location', 'description'];
 // When events are created, the id and creatorId will be automatically assigned
 export type PostEvent = Omit<AEYBEvent, 'id' | 'creatorId'>;
