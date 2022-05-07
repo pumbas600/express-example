@@ -1,4 +1,4 @@
-import { createEvent, deleteEvent, getEvents, updateEvent } from '../Controllers/EventController';
+import { createEvent, deleteEvent, getEvents, updateEvent } from '../controllers/EventController';
 import { Router } from 'express';
 
 const EventRouter = Router();

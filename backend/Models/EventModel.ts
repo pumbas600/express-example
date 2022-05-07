@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose';
-import { AEYBEvent } from '../Types/AYEBEvent';
+import { AEYBEvent } from '../types/AYEBEvent';
 
 export const EventSchema = new Schema<AEYBEvent>({
     name: {

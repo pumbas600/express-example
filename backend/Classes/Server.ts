@@ -1,6 +1,6 @@
 import express, { Express } from 'express';
-import EventRouter from '../Routes/EventRoutes';
-import Config from '../Types/Config';
+import EventRouter from '../routes/EventRoutes';
+import Config from '../types/Config';
 import mongoose from 'mongoose';
 
 export default class Server {

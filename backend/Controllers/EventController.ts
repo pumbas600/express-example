@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { PostEvent } from '../Types/AYEBEvent';
-import Status from '../Types/Status';
-import { EventModel } from '../Models/EventModel';
+import { PostEvent } from '../types/AYEBEvent';
+import Status from '../types/Status';
+import { EventModel } from '../models/EventModel';
 import mongoose from 'mongoose';
 
 // TODO: Test post event with random fields

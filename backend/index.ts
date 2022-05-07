@@ -1,5 +1,5 @@
-import Server from './Classes/Server';
-import Config from './Types/Config';
+import Server from './classes/Server';
+import Config from './types/Config';
 
 // Use require here so that we can type the config object
 const config: Config = require('../config.json');
