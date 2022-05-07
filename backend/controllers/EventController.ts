@@ -16,10 +16,14 @@ function isInvalidPostEvent(res: Response, postEvent: PostEvent): boolean {
         errors.push(`The name must be a string, got ${typeof postEvent.name}`);
     }
     if (typeof postEvent.location !== 'string') {
-        errors.push(`The location must be a string, got ${typeof postEvent.location}`);
+        errors.push(
+            `The location must be a string, got ${typeof postEvent.location}`,
+        );
     }
     if (typeof description !== 'string') {
-        errors.push(`The description must be a string, got ${typeof description}`);
+        errors.push(
+            `The description must be a string, got ${typeof description}`,
+        );
     }
 
     // Check for any errors
@@ -59,7 +63,10 @@ async function createEvent(req: Request<{}, {}, PostEvent>, res: Response) {
  * @desc 	Update an event
  * @route 	PUT /api/events/:id
  */
-async function updateEvent(req: Request<{ id: string }, {}, PostEvent>, res: Response) {
+async function updateEvent(
+    req: Request<{ id: string }, {}, PostEvent>,
+    res: Response,
+) {
     //if (isInvalidPostEvent(res, req.body)) return;
 
     const event = await EventModel.findById(req.params.id);
@@ -70,7 +77,10 @@ async function updateEvent(req: Request<{ id: string }, {}, PostEvent>, res: Res
         return;
     }
 
-    const updatedEvent = await EventModel.findByIdAndUpdate(req.params.id, req.body);
+    const updatedEvent = await EventModel.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+    );
 
     res.status(Status.OK).json(updatedEvent);
 }
