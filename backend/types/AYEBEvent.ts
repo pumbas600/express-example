@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export interface AEYBEvent {
-    id: mongoose.Types.ObjectId;
+    _id: mongoose.Types.ObjectId;
     name: string;
     location: string;
     creatorId: mongoose.Types.ObjectId; // id of user who created event
